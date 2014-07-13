@@ -1,0 +1,14 @@
+# the xnpm function
+function xnpm () {
+  # run npm command as usual
+  npm $@
+
+  # encode url to escape spaces
+  command="npm%20"`echo $@ | sed 's/ /%20/g'`
+
+  # send request to sparkfun
+  curl -s -o /dev/null "https://data.sparkfun.com/input/PUBLIC_KEY?private_key=PRIVATE_KEY&command=$command" 2>&1
+}
+
+# alias npm to xnpm
+alias npm='xnpm'
